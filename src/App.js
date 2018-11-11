@@ -24,17 +24,28 @@ class App extends React.Component {
         const country = e.target.elements.country.value;
         const api_call = await fetch(`http://api.openweathermap.org/data/2.5/weather?zip=${zipcode},${country}&appid=${API_KEY}`);
         const weatherData = await api_call.json();
-        console.log(weatherData);
-
-        this.setState({
-            temperature: weatherData.main.temp,
-            city: weatherData.name,
-            country: weatherData.sys.country,
-            humidity: weatherData.main.humidity,
-            pressure: weatherData.main.pressure,
-            description: weatherData.weather[0].description,
-            error: "Oops, couldn't get your weather. Please try again."
-        })
+        if (zipcode && country) {
+            this.setState({
+                temperature: weatherData.main.temp,
+                city: weatherData.name,
+                country: weatherData.sys.country,
+                humidity: weatherData.main.humidity,
+                pressure: weatherData.main.pressure,
+                description: weatherData.weather[0].description,
+                error: ""
+            })
+        } else {
+            this.setState({
+                temperature: undefined,
+                city: undefined,
+                country: undefined,
+                humidity: undefined,
+                pressure: undefined,
+                description: undefined,
+                error: "Please enter a valid zipcode and country to get the weather."
+            })
+        }
+        
     }
     render() {
         return(
@@ -48,6 +59,7 @@ class App extends React.Component {
                     temperature={this.state.temperature}
                     humidity={this.state.humidity}
                     pressure={this.state.pressure}
+                    error={this.state.error}
                 />
             </div>
         );
