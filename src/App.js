@@ -22,7 +22,7 @@ class App extends React.Component {
         e.preventDefault();
         const zipcode = e.target.elements.zipcode.value;
         const country = e.target.elements.country.value;
-        const api_call = await fetch(`http://api.openweathermap.org/data/2.5/weather?zip=${zipcode},${country}&appid=${API_KEY}`);
+        const api_call = await fetch(`http://api.openweathermap.org/data/2.5/weather?zip=${zipcode},${country}&appid=${API_KEY}&units=imperial`);
         const weatherData = await api_call.json();
         if (zipcode && country) {
             this.setState({
@@ -32,7 +32,7 @@ class App extends React.Component {
                 humidity: weatherData.main.humidity,
                 pressure: weatherData.main.pressure,
                 description: weatherData.weather[0].description,
-                error: ""
+                error: ''
             })
         } else {
             this.setState({
@@ -42,28 +42,40 @@ class App extends React.Component {
                 humidity: undefined,
                 pressure: undefined,
                 description: undefined,
-                error: "Please enter a valid zipcode and country to get the weather."
+                error: 'Please enter a valid zipcode and country to get the weather.'
             })
         }
         
     }
     render() {
         return(
-            <div>
-                <Titles />
-                <Form getWeather={this.getWeather}/>
-                <Weather 
-                    city={this.state.city}
-                    country={this.state.country}
-                    description={this.state.description}
-                    temperature={this.state.temperature}
-                    humidity={this.state.humidity}
-                    pressure={this.state.pressure}
-                    error={this.state.error}
-                />
-            </div>
+                <div className='wrapper'>
+                    <div className='main'>
+                        <div className='container'>
+                            <div className='row'>
+                                <div className='col-xs-12 col-sm-5 title-container'>
+                                    <Titles />
+                                </div>
+                                <div className='col-xs-12 col-sm-7 form-container'>
+                                    <Form getWeather={this.getWeather}/> 
+                                    <Weather 
+                                        city={this.state.city}
+                                        country={this.state.country}
+                                        description={this.state.description}
+                                        temperature={this.state.temperature}
+                                        humidity={this.state.humidity}
+                                        pressure={this.state.pressure}
+                                        error={this.state.error}
+                                    />                 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
         );
     }
 }
+
+                
 
 export default App;
