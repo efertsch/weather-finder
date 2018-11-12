@@ -21,7 +21,7 @@ class App extends React.Component {
         e.preventDefault();
         const zipcode = e.target.elements.zipcode.value;
         const country = e.target.elements.country.value;
-        const api_call = await fetch(`http://api.openweathermap.org/data/2.5/weather?zip=${zipcode},${country}&appid=${API_KEY}&units=imperial`);
+        const api_call = await fetch(`https://cors-anywhere.herokuapp.com/http://api.openweathermap.org/data/2.5/weather?zip=${zipcode},${country}&appid=${API_KEY}&units=imperial`);
         const weatherData = await api_call.json();
         if (zipcode && country) {
             this.setState({
