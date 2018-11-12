@@ -1,4 +1,4 @@
-##Weather Finder App
+###Weather Finder App
 
 A simple weather finder application built in React. 
 
